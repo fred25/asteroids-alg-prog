@@ -4,6 +4,9 @@
 
 // definir constantes 
 #define ANGULAR_SPEED 1
+#define ACCELERATION 1
+#define MAX_SPEED 10
+#define FRICTION 0.5
 
 /**
  * Função com a lógica do player
@@ -12,6 +15,8 @@
 void player_logic(PLAYER* player){
     // update angle
     player->angle = new_angle(player->angle);
+
+    player->speed = new_speed(player->speed);
 
 }
 
@@ -33,9 +38,29 @@ float new_angle(float angle){
     }
 
     // mantem os valores entre 0 e 360
-    if (angle > 360) angle -= 360;
+    if (angle >= 360) angle -= 360;
     if (angle < 0) angle += 360;
 
     return angle;
 
+}
+
+/**
+ * função que calcula a velocidade do player no próximo frame
+ * se W ou seta pra cima estiver pressionado aumenta a velocidade
+ * se não diminui com o "atrito"
+ */
+float new_speed(float speed){
+
+    // verifica se o "pra frente" está sendo apertado;
+    if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
+        speed += ACCELERATION;
+    } else {
+        speed -= FRICTION;
+    } 
+
+    if (speed < 0) speed = 0;
+    if (speed > MAX_SPEED) speed = MAX_SPEED;
+
+    return speed;
 }
