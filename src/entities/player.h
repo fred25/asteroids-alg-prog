@@ -9,3 +9,4 @@ typedef struct {
 
 // funcoes
 void player_logic(PLAYER*);
+float new_angle(float);
