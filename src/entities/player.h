@@ -8,4 +8,4 @@ typedef struct {
 } PLAYER;
 
 // funcoes
-PLAYER player_logic(PLAYER);
+void player_logic(PLAYER*);

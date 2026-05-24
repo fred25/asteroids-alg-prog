@@ -67,6 +67,6 @@ void game(){
 void game_logic(PLAYER* player){
 
     // lógica do player
-    *player = player_logic(*player);
+    player_logic(player);
 
 }

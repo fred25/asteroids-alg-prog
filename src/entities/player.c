@@ -6,8 +6,8 @@
  * recebe um objeto player e devolve uma versão atualizada
  * para o próximo frame
  */
-PLAYER player_logic(PLAYER player){
-    //TODO
-    
-    return player;
+void player_logic(PLAYER* player){
+    // create new player struct
+    player->angle = 10;
+
 }
