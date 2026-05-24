@@ -10,7 +10,7 @@
  * recebe um objeto player e atualiza para o próximo frame
  */
 void player_logic(PLAYER* player){
-    // create new player struct
+    // update angle
     player->angle = new_angle(player->angle);
 
 }
@@ -24,17 +24,17 @@ float new_angle(float angle){
     if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)){
         // se sim, subtrai a velocidade angular do angulo
         angle += ANGULAR_SPEED;
-        // se passar de 360 substrai 1 volta
-        angle = angle > 360 ? angle - 350 : angle;
     } 
     
     // verifica se D ou seta para direita está apertado
     if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
         // se sim, subtrai a velocidade angular do angulo
         angle -= ANGULAR_SPEED;
-        // se ficar negativo aumenta uma volta
-        angle = angle < 0 ? angle + 360 : angle;
     }
+
+    // mantem os valores entre 0 e 360
+    if (angle > 360) angle -= 360;
+    if (angle < 0) angle += 360;
 
     return angle;
 
