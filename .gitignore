@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+src_game/
+asteroids
+
 # Object files
 *.o
 *.ko
