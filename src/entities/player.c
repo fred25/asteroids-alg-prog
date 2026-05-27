@@ -64,3 +64,16 @@ float new_speed(float speed){
 
     return speed;
 }
+
+void draw_player(PLAYER player, Texture2D sprite){
+
+    DrawTexturePro(
+        sprite,
+        (Rectangle) { 0.0f, 0.0f, (float)sprite.width, (float)sprite.height },
+        (Rectangle) { player.y, player.x, (float)sprite.width, (float)sprite.height },
+        (Vector2) {(float)sprite.width/2.0f, (float)sprite.height/2.0f },
+        player.angle,
+        WHITE
+    );
+
+}

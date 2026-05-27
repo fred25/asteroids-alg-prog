@@ -1,3 +1,5 @@
+#include "raylib.h"
+
 // estruturas
 typedef struct {
     int x;
@@ -11,3 +13,5 @@ typedef struct {
 void player_logic(PLAYER*);
 float new_angle(float);
 float new_speed(float);
+
+void draw_player(PLAYER, Texture2D);
