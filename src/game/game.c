@@ -1,14 +1,7 @@
 // incluindo módulos
 #include "raylib.h"
 #include "player.h"
-
-// definindo valores para o desenho dos objetos
-#define LARGURA 1200
-#define ALTURA 800
-
-// definindo valores máximos para balas e asteroides
-#define MAX_BALAS 100
-#define MAX_ASTEROIDES 50
+#include "definitions.h"
 
 /**
  * Função "motor" do jogo, roda todas as funcionalidades do jogo.

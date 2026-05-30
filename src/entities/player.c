@@ -1,13 +1,8 @@
 // inclusão de bibliotecas
 #include "player.h"
 #include "raylib.h"
+#include "definitions.h"
 #include <math.h>
-
-// definir constantes 
-#define ANGULAR_SPEED 10
-#define ACCELERATION 1
-#define MAX_SPEED 30
-#define FRICTION 0.5
 
 /**
  * Função com a lógica do player
@@ -31,13 +26,13 @@ float new_angle(float angle){
     // verifica se A ou seta pra esquerda está apertado
     if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)){
         // se sim, subtrai a velocidade angular do angulo
-        angle -= ANGULAR_SPEED;
+        angle -= PLAYER_ANGULAR_SPEED;
     } 
     
     // verifica se D ou seta para direita está apertado
     if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
         // se sim, subtrai a velocidade angular do angulo
-        angle += ANGULAR_SPEED;
+        angle += PLAYER_ANGULAR_SPEED;
     }
 
     // mantem os valores entre 0 e 360
@@ -57,13 +52,13 @@ float new_speed(float speed){
 
     // verifica se o "pra frente" está sendo apertado;
     if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
-        speed += ACCELERATION;
+        speed += PLAYER_ACCELERATION;
     } else {
-        speed -= FRICTION;
+        speed -= PLAYER_ACCELERATION;
     } 
 
     if (speed < 0) speed = 0;
-    if (speed > MAX_SPEED) speed = MAX_SPEED;
+    if (speed > PLAYER_MAX_SPEED) speed = PLAYER_MAX_SPEED;
 
     return speed;
 }
@@ -78,9 +73,9 @@ POSITION new_position(PLAYER player){
     pos.x = player.position.x - player.speed * cos(player.angle * PI / 180);
     pos.y = player.position.y - player.speed * sin(player.angle * PI / 180);
 
-    if (pos.x > 1000) pos.x = 0;
+    if (pos.x > LARGURA) pos.x = 0;
     if (pos.x < 0) pos.x = 1000;
-    if (pos.y > 1000) pos.y = 0;
+    if (pos.y > ALTURA) pos.y = 0;
     if (pos.y < 0) pos.y = 1000;
 
     return pos;
