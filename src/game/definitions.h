@@ -18,3 +18,6 @@ typedef struct {
 #define PLAYER_ACCELERATION 1
 #define PLAYER_MAX_SPEED 30
 #define PLAYER_FRICTION 0.5
+
+// bullet constants
+#define BULLET_ACCELERATION 1
