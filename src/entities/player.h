@@ -1,11 +1,7 @@
 #include "raylib.h"
+#include "definitions.h"
 
 // estruturas
-typedef struct {
-    int x;
-    int y;
-} POSITION;
-
 typedef struct {
     POSITION position;
     float angle;

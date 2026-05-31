@@ -1,3 +1,9 @@
+// definindo estruturas globais
+typedef struct {
+    int x;
+    int y;
+} POSITION;
+
 // definindo valores para o desenho dos objetos
 #define LARGURA 1200
 #define ALTURA 800
