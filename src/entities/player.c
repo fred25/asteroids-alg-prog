@@ -13,7 +13,7 @@ void player_logic(PLAYER* player){
 
     player->speed = new_speed(player->speed);
 
-    player->position = new_position(*player);
+    player->position = new_position(player->position, player->speed, player->angle);
 
 }
 
@@ -60,39 +60,4 @@ float new_speed(float speed){
     if (speed > PLAYER_MAX_SPEED) speed = PLAYER_MAX_SPEED;
 
     return speed;
-}
-
-/**
- * função que atualiza a posição do player
- */
-POSITION new_position(PLAYER player){
-
-    POSITION pos;
-
-    pos.x = player.position.x - player.speed * cos(player.angle * PI / 180);
-    pos.y = player.position.y - player.speed * sin(player.angle * PI / 180);
-
-    if (pos.x > LARGURA) pos.x = 0;
-    if (pos.x < 0) pos.x = 1000;
-    if (pos.y > ALTURA) pos.y = 0;
-    if (pos.y < 0) pos.y = 1000;
-
-    return pos;
-
-}
-
-/**
- * Função que dada um kobjeto player e um sprite desenha o player na tela
- */
-void draw_player(PLAYER player, Texture2D sprite){
-
-    DrawTexturePro(
-        sprite,
-        (Rectangle) { 0.0f, 0.0f, (float)sprite.width, (float)sprite.height },
-        (Rectangle) { player.position.x, player.position.y, (float)sprite.width, (float)sprite.height },
-        (Vector2) {(float)sprite.width/2.0f, (float)sprite.height/2.0f },
-        player.angle - 90,
-        WHITE
-    );
-
 }

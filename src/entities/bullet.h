@@ -1,3 +1,5 @@
+#ifndef BULLET_H
+#define BULLET_H
 #include "definitions.h"
 #include <math.h>
 #include "raylib.h"
@@ -10,6 +12,4 @@ typedef struct{
 
 // define funcitons
 void bullet_logic(BULLET*, int);
-void single_bullet_logic(BULLET*);
-POSITION new_position(BULLET);
-void draw_bullet(BULLET*, Texture2D sprite);
+#endif

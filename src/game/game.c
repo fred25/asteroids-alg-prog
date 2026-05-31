@@ -1,13 +1,13 @@
 // incluindo módulos
 #include "raylib.h"
-#include "player.h"
-#include "definitions.h"
+#include "game.h"
 
 /**
  * Função "motor" do jogo, roda todas as funcionalidades do jogo.
  */
 void game(){
 
+    
     // cria variaveis - depois vamos ter que trocar isso pela leitura do arquivo lá
     // variavel do player
     PLAYER player = {
@@ -17,7 +17,7 @@ void game(){
         0, // velocidade
         3 // vidas
     };
-
+    
     // variavel dos asteroides (aqui eu recomendo fazer uma lista da estrutura q tu criar pro asteroide)
     // TODO
 
@@ -27,7 +27,8 @@ void game(){
     // Configurações iniciais da janela 
     InitWindow(LARGURA, ALTURA, "Asteroids - AlgProg");
     SetTargetFPS(60);
-
+    
+    Texture2D player_sprite = LoadTexture("assets/sprites/player_beta.png");
     // Game loop
     while (!WindowShouldClose()){
 
@@ -46,7 +47,7 @@ void game(){
         game_logic(&player);
 
         // desenha o frame do jogo
-        draw_game();
+        draw_game(&player, &player_sprite);
 
     }
 
@@ -61,5 +62,19 @@ void game_logic(PLAYER* player){
 
     // lógica do player
     player_logic(player);
+
+}
+
+/**
+ * Função que desenha cada frame do jogo
+ */
+void draw_game(PLAYER* player, Texture2D* player_sprite){
+
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+
+    draw_sprite(player->position, *player_sprite, player->angle);
+
+    EndDrawing();
 
 }

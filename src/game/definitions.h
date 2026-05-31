@@ -1,8 +1,15 @@
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
+#include "raylib.h"
 // definindo estruturas globais
 typedef struct {
     int x;
     int y;
 } POSITION;
+
+// definindo funções globais
+POSITION new_position(POSITION, int, float);
+void draw_sprite(POSITION position, Texture2D sprite, float angle);
 
 // definindo valores para o desenho dos objetos
 #define LARGURA 1200
@@ -21,3 +28,5 @@ typedef struct {
 
 // bullet constants
 #define BULLET_ACCELERATION 1
+
+#endif
