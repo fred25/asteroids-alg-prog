@@ -6,29 +6,20 @@
  * Função "motor" do jogo, roda todas as funcionalidades do jogo.
  */
 void game(){
-
     
-    // cria variaveis - depois vamos ter que trocar isso pela leitura do arquivo lá
-    // variavel do player
-    PLAYER player = {
-        10, // posição x
-        10, // posição y
-        0, // agulo
-        0, // velocidade
-        3 // vidas
-    };
-    
-    // variavel dos asteroides (aqui eu recomendo fazer uma lista da estrutura q tu criar pro asteroide)
-    // TODO
-
-    // variavel das balas
-    //TODO
-
     // Configurações iniciais da janela 
     InitWindow(LARGURA, ALTURA, "Asteroids - AlgProg");
     SetTargetFPS(60);
     
-    Texture2D player_sprite = LoadTexture("assets/sprites/player_beta.png");
+    // cria variaveis - depois vamos ter que trocar isso pela leitura do arquivo lá
+    GAME game;
+    // popula o objeto do game
+    game.player = (PLAYER) {(POSITION){10, 10}, 0, 0, 3};
+    game.player_sprite = LoadTexture(PLAYER_SPRITE_PATH);
+
+    game.n_bullets = 0;
+    game.bullet_sprite = LoadTexture(BULLET_SPRITE_PATH);
+    
     // Game loop
     while (!WindowShouldClose()){
 
@@ -44,10 +35,10 @@ void game(){
         */
 
         // roda o "passo lógico do jogo" e atualiza as estruturas la em cima
-        game_logic(&player);
+        game_logic(&game);
 
         // desenha o frame do jogo
-        draw_game(&player, &player_sprite);
+        draw_game(&game);
 
     }
 
@@ -58,22 +49,22 @@ void game(){
  * Esta função recebe por referência (ponteiros) das entidades presentes no jogo e as atualiza
  * a partir da sua própria lógica.
 */
-void game_logic(PLAYER* player){
+void game_logic(GAME* game){
 
     // lógica do player
-    player_logic(player);
+    player_logic(&game->player);
 
 }
 
 /**
  * Função que desenha cada frame do jogo
  */
-void draw_game(PLAYER* player, Texture2D* player_sprite){
+void draw_game(GAME* game){
 
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-    draw_sprite(player->position, *player_sprite, player->angle);
+    draw_sprite(game->player.position, game->player_sprite, game->player.angle);
 
     EndDrawing();
 
