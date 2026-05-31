@@ -1,7 +1,6 @@
 // inclusão de bibliotecas
 #include "player.h"
 #include "raylib.h"
-#include "definitions.h"
 #include <math.h>
 
 /**
