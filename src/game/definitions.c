@@ -10,8 +10,8 @@ POSITION new_position(POSITION position, int speed, float angle){
 
     POSITION pos;
 
-    pos.x = position.x + speed * cos(angle * PI / 180);
-    pos.y = position.y + speed * sin(angle * PI / 180);
+    pos.x = position.x + speed * sin(angle * PI / 180);
+    pos.y = position.y - speed * cos(angle * PI / 180);
 
     if (pos.x > LARGURA) pos.x = 0;
     if (pos.x < 0) pos.x = LARGURA;
@@ -34,7 +34,7 @@ void draw_sprite(POSITION position, Texture2D sprite, float angle){
         (Rectangle) { 0.0f, 0.0f, (float)sprite.width, (float)sprite.height },
         (Rectangle) {position.x,position.y, (float)sprite.width, (float)sprite.height },
         (Vector2) {(float)sprite.width/2.0f, (float)sprite.height/2.0f },
-        angle + 90,
+        angle,
         WHITE
     );
 

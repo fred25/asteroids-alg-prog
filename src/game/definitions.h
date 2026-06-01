@@ -27,6 +27,6 @@ void draw_sprite(POSITION position, Texture2D sprite, float angle);
 #define PLAYER_FRICTION 0.5
 
 // bullet constants
-#define BULLET_ACCELERATION 1
+#define BULLET_ACCELERATION 10
 
 #endif

@@ -53,6 +53,7 @@ void game_logic(GAME* game){
 
     // lógica do player
     player_logic(&game->player);
+    shoot(game->bullets, &game->n_bullets, game->player);
 
     // logica das balas
     bullet_logic(game->bullets, game->n_bullets);

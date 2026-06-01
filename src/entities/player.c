@@ -2,6 +2,7 @@
 #include "player.h"
 #include "raylib.h"
 #include <math.h>
+#include <stdio.h>
 
 /**
  * Função com a lógica do player
@@ -60,4 +61,16 @@ float new_speed(float speed){
     if (speed > PLAYER_MAX_SPEED) speed = PLAYER_MAX_SPEED;
 
     return speed;
+}
+
+/**
+ * Função que faz a nave do jogador criar um objeto "bala"
+ */
+void shoot(BULLET* bullets, int* n_bullets, PLAYER player){ 
+
+    if (IsKeyPressed(KEY_SPACE)){
+        bullets[*n_bullets] = (BULLET) {player.position, player.angle};
+        (*n_bullets)++;
+    
+    }
 }
