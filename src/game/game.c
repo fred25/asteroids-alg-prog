@@ -66,7 +66,7 @@ void game_logic(GAME* game){
 void draw_game(GAME* game){
 
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(BLACK);
 
     // draw player
     draw_sprite(game->player.position, game->player_sprite, game->player.angle);
