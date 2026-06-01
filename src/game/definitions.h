@@ -28,5 +28,6 @@ void draw_sprite(POSITION position, Texture2D sprite, float angle);
 
 // bullet constants
 #define BULLET_ACCELERATION 10
+#define BULLET_LIFE 60
 
 #endif

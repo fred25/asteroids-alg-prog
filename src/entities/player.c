@@ -69,7 +69,7 @@ float new_speed(float speed){
 void shoot(BULLET* bullets, int* n_bullets, PLAYER player){ 
 
     if (IsKeyPressed(KEY_SPACE)){
-        bullets[*n_bullets] = (BULLET) {player.position, player.angle};
+        bullets[*n_bullets] = (BULLET) {player.position, player.angle, BULLET_LIFE};
         (*n_bullets)++;
     
     }
