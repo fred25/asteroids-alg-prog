@@ -12,4 +12,5 @@ typedef struct{
 
 // define funcitons
 void bullet_logic(BULLET*, int);
+void draw_bullets(BULLET*, int, Texture2D);
 #endif

@@ -54,6 +54,9 @@ void game_logic(GAME* game){
     // lógica do player
     player_logic(&game->player);
 
+    // logica das balas
+    bullet_logic(game->bullets, game->n_bullets);
+
 }
 
 /**
@@ -64,7 +67,11 @@ void draw_game(GAME* game){
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
+    // draw player
     draw_sprite(game->player.position, game->player_sprite, game->player.angle);
+
+    //draw bullets
+    draw_bullets(game->bullets, game->n_bullets, game->bullet_sprite);
 
     EndDrawing();
 
