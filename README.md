@@ -9,6 +9,7 @@ asteroid.c / asteroid.h
 collision.c / collision.h
 spawning.c / spawning.h
 game states (game over, restart)
+a
 
 ## Compiling the project
 
