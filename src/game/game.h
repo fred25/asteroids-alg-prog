@@ -6,6 +6,14 @@
 #define PLAYER_SPRITE_PATH "assets/sprites/player_beta.png"
 #define BULLET_SPRITE_PATH "assets/sprites/bullet_beta.png"
 
+// define game states 
+typedef enum {
+    GAME_STATE_MENU,
+    GAME_STATE_PLAYING,
+    GAME_STATE_PAUSED,
+    GAME_STATE_GAMEOVER
+} GAME_STATE;
+
 // define GAME structure
 typedef struct {
     // player related
@@ -19,9 +27,21 @@ typedef struct {
 
     // game related
     int points;
+    int current_level;
+    GAME_STATE state;
 
 } GAME;
+
 
 void game();
 void game_logic(GAME*);
 void draw_game(GAME*);
+void update_game_state(GAME*);
+void draw_game_state(GAME*);
+void draw_menu();
+void draw_pause();
+void draw_game_over(GAME*);
+void start_new_game(GAME* game);
+void update_menu(GAME*);
+void update_pause(GAME*);
+void update_game_over(GAME*);
