@@ -108,7 +108,6 @@ void draw_game_state(GAME* game) {
             break;
     }
 
-    DrawText(TextFormat("State: %d", game->state), 20, 20, 20, YELLOW);
 
     EndDrawing();
 }
