@@ -166,20 +166,43 @@ void draw_game(GAME* game){
 
 }
 
+void deal_with_file(char* filename, PLAYER* player){
+
+    char id;
+    int x, y;
+    float dx, dy;
+
+    FILE *f = fopen(filename, "r");
+
+    if (f == NULL) {
+        return;
+    }
+
+    while (fscanf(f, "%c,%d,%d,%f,%f", &id, &x, &y, &dx, &dy) == 5){
+
+        if (id == 'N'){
+            *player = (PLAYER) {
+                .position = (POSITION) {.x = x, .y = y},
+                .angle = 0,
+                .speed = 0,
+                .vida = 3 
+            };
+        }
+
+    }
+
+    fclose(f);
+
+}
+
 // funcao que cria/comeca um novo jogo
 void start_new_game(GAME* game){
     game->state = GAME_STATE_PLAYING;
     game->points = 0;
     game->current_level = 1;
-    game->player = (PLAYER) {
-        .position = (POSITION){100, 100},
-        .angle = 0,
-        .speed = 0,
-        .vida = 3
-    };
     game->n_bullets = 0;
 
-    // quando criar o file dos asteroides tem que adicionar aqui pra resetar eles tambem
+    deal_with_file("files/niveis/nivel_1.txt", &game->player);
 
 };
 
@@ -192,7 +215,7 @@ void update_menu(GAME* game) {
     }
 
     if (IsKeyPressed(KEY_C)) {
-        load_game(game);
+        load_save(game);
     }
 
     if (IsKeyPressed(KEY_Q)) {

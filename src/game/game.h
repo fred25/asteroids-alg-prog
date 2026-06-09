@@ -36,6 +36,7 @@ typedef struct {
 void game();
 void game_logic(GAME*);
 void draw_game(GAME*);
+void deal_with_file(char* filename, PLAYER* player);
 void update_game_state(GAME*);
 void draw_game_state(GAME*);
 void draw_menu();

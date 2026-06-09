@@ -3,7 +3,7 @@
 
 src_game/
 asteroids
-files/*
+files/*.bin
 
 # Object files
 *.o
