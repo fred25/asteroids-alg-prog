@@ -203,7 +203,7 @@ void update_menu(GAME* game) {
 /**
  * Função que carrega o jogo salvo
  */
-void load_game(GAME* game){
+void load_save(GAME* game){
 
     FILE *f = fopen("files/save.bin", "rb");
 
