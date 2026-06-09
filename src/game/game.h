@@ -40,6 +40,8 @@ void update_game_state(GAME*);
 void draw_game_state(GAME*);
 void draw_menu();
 void draw_pause();
+void save_game(GAME);
+void load_game(GAME*);
 void draw_game_over(GAME*);
 void start_new_game(GAME* game);
 void update_menu(GAME*);

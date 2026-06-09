@@ -1,6 +1,7 @@
 // incluindo módulos
 #include "raylib.h"
 #include "game.h"
+#include <stdio.h>
 
 /**
  * Função "motor" do jogo, roda todas as funcionalidades do jogo.
@@ -191,13 +192,31 @@ void update_menu(GAME* game) {
     }
 
     if (IsKeyPressed(KEY_C)) {
-        // tem q ver como faz a parte dos arquivos
+        load_game(game);
     }
 
     if (IsKeyPressed(KEY_Q)) {
        // jogo deve fechar
     }
 };
+
+/**
+ * Função que carrega o jogo salvo
+ */
+void load_game(GAME* game){
+
+    FILE *f = fopen("files/save.bin", "rb");
+
+    if (f == NULL){
+        fclose(f);
+        return;
+    }
+
+    fread(game, sizeof(*game), 1, f);
+
+    fclose(f);
+
+}
 
 // funcao que checa se alguma das teclas de acao do menu de pausa foram pressionadas
 void update_pause(GAME* game) {
@@ -206,7 +225,7 @@ void update_pause(GAME* game) {
     }
 
     if (IsKeyPressed(KEY_S)) {
-        // parte dos arquivos
+        save_game(*game);
     }
 
     if (IsKeyPressed(KEY_M)) {
@@ -217,6 +236,26 @@ void update_pause(GAME* game) {
         // jogo deve fechar
     }
 };
+
+/**
+ * Função que salva o jogo em um arquivo binário
+ */
+void save_game(GAME game){
+
+    FILE *f = fopen("files/save.bin", "wb");
+
+    if (f == NULL) {
+        fclose(f);
+        return;
+    }
+
+    game.state = GAME_STATE_PLAYING;
+
+    fwrite(&game, sizeof(game), 1, f);
+
+    fclose(f);
+
+}
 
 // funcao que checa se alguma das teclas de acao da tela de game over foram pressionadas
 void update_game_over(GAME* game) {
