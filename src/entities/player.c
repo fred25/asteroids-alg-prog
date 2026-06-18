@@ -8,16 +8,26 @@
  * Função com a lógica do player
  * recebe um objeto player e atualiza para o próximo frame
  */
-void player_logic(PLAYER* player){
-    // update angle
+void player_logic(PLAYER *player)
+{
     player->angle = new_angle(player->angle);
 
-    player->speed = new_speed(player->speed);
+    new_speed(&player->speedx, &player->speedy, player->angle);
 
-    player->position = new_position(player->position, player->speed, player->angle);
+    float speed_sq =
+        player->speedx * player->speedx +
+        player->speedy * player->speedy;
 
+    float speed = sqrtf(speed_sq);
+
+    float movement_angle =
+        atan2f(player->speedx, player->speedy) * 180.0f / PI;
+
+    player->position =
+        new_position(player->position,
+                     speed,
+                     movement_angle);
 }
-
 /**
  * Função que le as entradas do teclado e retorna o novo valor do ângulo do jogador
  */
@@ -48,19 +58,21 @@ float new_angle(float angle){
  * se W ou seta pra cima estiver pressionado aumenta a velocidade
  * se não diminui com o "atrito"
  */
-float new_speed(float speed){
+void new_speed(float *speedx, float *speedy, float angle){
 
     // verifica se o "pra frente" está sendo apertado;
     if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
-        speed += PLAYER_ACCELERATION;
+        *speedx += PLAYER_ACCELERATION * sin(angle * PI / 180);
+        *speedy += PLAYER_ACCELERATION * cos(angle * PI / 180);
     } else {
-        speed -= PLAYER_ACCELERATION;
+        *speedx *= PLAYER_FRICTION;
+        *speedy *= PLAYER_FRICTION;
     } 
-
-    if (speed < 0) speed = 0;
-    if (speed > PLAYER_MAX_SPEED) speed = PLAYER_MAX_SPEED;
-
-    return speed;
+    
+    if (*speedx < -PLAYER_MAX_SPEED) *speedx = -PLAYER_MAX_SPEED;
+    if (*speedy < -PLAYER_MAX_SPEED) *speedy = -PLAYER_MAX_SPEED;
+    if (*speedx > PLAYER_MAX_SPEED) *speedx = PLAYER_MAX_SPEED;
+    if (*speedy > PLAYER_MAX_SPEED) *speedy = PLAYER_MAX_SPEED;
 }
 
 /**

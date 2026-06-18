@@ -1,12 +1,13 @@
 #include "definitions.h"
 #include <math.h>
 #include "raylib.h"
+#include <stdio.h>
 
 /**
  * Função que dada uma posição, uma velocidade e um ângulo define
  * uma nova posição para o frame seguinte
  */
-POSITION new_position(POSITION position, int speed, float angle){
+POSITION new_position(POSITION position, float speed, float angle){
 
     POSITION pos;
 

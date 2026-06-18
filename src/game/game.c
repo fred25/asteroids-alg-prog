@@ -20,7 +20,7 @@ void game(){
     game.current_level = 1;
 
     // popula o objeto do game
-    game.player = (PLAYER) {(POSITION){10, 10}, 0, 0, 3};
+    game.player = (PLAYER) {(POSITION){10, 10}, 0, 0, 0, 3};
     game.player_sprite = LoadTexture(PLAYER_SPRITE_PATH);
 
     game.n_bullets = 0;
@@ -184,7 +184,8 @@ void deal_with_file(char* filename, PLAYER* player){
             *player = (PLAYER) {
                 .position = (POSITION) {.x = x, .y = y},
                 .angle = 0,
-                .speed = 0,
+                .speedx = 0.0,
+                .speedy = 0.0,
                 .vida = 3 
             };
         }
