@@ -15,9 +15,8 @@ void draw_sprite(POSITION position, Texture2D sprite, float angle);
 #define LARGURA 1200
 #define ALTURA 800
 
-// definindo valores máximos para balas e asteroides
+// definindo valor máximo para balas
 #define MAX_BALAS 100
-#define MAX_ASTEROIDES 50
 
 //player constansts
 // definir constantes 
@@ -29,5 +28,9 @@ void draw_sprite(POSITION position, Texture2D sprite, float angle);
 // bullet constants
 #define BULLET_ACCELERATION 15
 #define BULLET_LIFE 60
+
+// asteroids constants
+#define MAX_ASTEROIDES 15
+
 
 #endif

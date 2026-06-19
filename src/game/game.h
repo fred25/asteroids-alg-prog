@@ -3,9 +3,11 @@
 #include "definitions.h"
 #include "../entities/player.h"
 #include "bullet.h"
+#include "../entities/asteroid.h"
 
 #define PLAYER_SPRITE_PATH "assets/sprites/player_beta.png"
 #define BULLET_SPRITE_PATH "assets/sprites/bullet_beta.png"
+#define ASTEROID_SPRITE_PATH "assets/sprites/asteroid_beta.png"
 
 // define game states 
 typedef enum {
@@ -26,6 +28,12 @@ typedef struct {
     int n_bullets;
     Texture2D bullet_sprite;
 
+    // asteroid related
+    ASTEROID asteroids[MAX_ASTEROIDES];
+    int n_asteroids;
+    Texture2D asteroid_sprite;
+
+
     // game related
     int points;
     int current_level;
@@ -38,7 +46,7 @@ typedef struct {
 void game();
 void game_logic(GAME*);
 void draw_game(GAME*);
-void deal_with_file(char* filename, PLAYER* player);
+void deal_with_file(char* filename, GAME* game);
 void update_game_state(GAME*);
 void draw_game_state(GAME*);
 void draw_menu();

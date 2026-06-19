@@ -14,7 +14,6 @@ void game(){
     
     SetExitKey(KEY_NULL);
 
-
     // cria variaveis - depois vamos ter que trocar isso pela leitura do arquivo lá
     GAME game;
 
@@ -30,6 +29,9 @@ void game(){
 
     game.n_bullets = 0;
     game.bullet_sprite = LoadTexture(BULLET_SPRITE_PATH);
+
+    game.n_asteroids = 0;
+    game.asteroid_sprite = LoadTexture(ASTEROID_SPRITE_PATH);
     
     // Game loop
     while (!WindowShouldClose() && !game.should_close){
@@ -78,6 +80,9 @@ void game_logic(GAME* game){
 
     // logica das balas
     bullet_logic(game->bullets, &game->n_bullets);
+
+    // logica dos asteroides
+    asteroid_logic(game->asteroids, game->n_asteroids);
 
     // checa se eh game over
     if(game->player.vida <= 0) {
@@ -172,6 +177,9 @@ void draw_game(GAME* game){
     //draw bullets
     draw_bullets(game->bullets, game->n_bullets, game->bullet_sprite);
 
+    // draw asteorids
+    draw_asteroid(game->asteroids, game->n_asteroids, game->asteroid_sprite);
+
     // mostra as estatisticas na parte de baixo da tela
     DrawText(TextFormat("Vidas: %d", game->player.vida), 20, 750, 30, WHITE);
     DrawText(TextFormat("Pontos: %d", game->points), 250, 750, 30, WHITE);
@@ -179,7 +187,7 @@ void draw_game(GAME* game){
 
 }
 
-void deal_with_file(char* filename, PLAYER* player){
+void deal_with_file(char* filename, GAME* game){
 
     char id;
     int x, y;
@@ -191,10 +199,12 @@ void deal_with_file(char* filename, PLAYER* player){
         return;
     }
 
-    while (fscanf(f, "%c,%d,%d,%f,%f", &id, &x, &y, &dx, &dy) == 5){
+     game->n_asteroids = 0;
+
+    while (fscanf(f, " %c,%d,%d,%f,%f", &id, &x, &y, &dx, &dy) == 5){
 
         if (id == 'N'){
-            *player = (PLAYER) {
+            game->player = (PLAYER) {
                 .position = (POSITION) {.x = x, .y = y},
                 .angle = 0,
                 .speedx = 0.0,
@@ -203,10 +213,19 @@ void deal_with_file(char* filename, PLAYER* player){
             };
         }
 
+        if (id == 'A' && game->n_asteroids < MAX_ASTEROIDES) {
+            int i = game->n_asteroids;
+
+            game->asteroids[i] = (ASTEROID) {
+                .position = (POSITION) {.x = x, .y = y},
+                .velocity = (VELOCITY) {.vx = dx, .vy = dy},
+                .active = true
+            };
+
+            game->n_asteroids++;
+        }
     }
-
     fclose(f);
-
 }
 
 // funcao que cria/comeca um novo jogo
@@ -216,7 +235,7 @@ void start_new_game(GAME* game){
     game->current_level = 1;
     game->n_bullets = 0;
 
-    deal_with_file("files/niveis/nivel_1.txt", &game->player);
+    deal_with_file("files/niveis/nivel_1.txt", game);
 
 };
 
@@ -230,6 +249,7 @@ void update_menu(GAME* game) {
 
     if (IsKeyPressed(KEY_C)) {
         load_save(game);
+        // deveria ter algo aqui para trocar pro estado de jogando ou isso deveria ser na funcao?
     }
 
     if (IsKeyPressed(KEY_Q)) {
@@ -263,6 +283,7 @@ void update_pause(GAME* game) {
 
     if (IsKeyPressed(KEY_S)) {
         save_game(*game);
+        game->state = GAME_STATE_MENU;
     }
 
     if (IsKeyPressed(KEY_M)) {
@@ -305,17 +326,17 @@ void update_game_over(GAME* game) {
     }
 
     if (IsKeyPressed(KEY_ESCAPE)){
-        game->state - GAME_STATE_MENU;
+        game->state = GAME_STATE_MENU;
     }
 
     if (IsKeyPressed(KEY_Q)) {
-        // jogo deve fechar
+        quit_game(game);
     }
 };
 
+// funcao que da quit e fecha o jogo
 void quit_game(GAME* game){
     game->should_close = true;
 
 }
 
-// fazer com que de pra fechar o jogo apertando Q 
