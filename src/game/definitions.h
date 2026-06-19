@@ -3,12 +3,12 @@
 #include "raylib.h"
 // definindo estruturas globais
 typedef struct {
-    int x;
-    int y;
+    float x;
+    float y;
 } POSITION;
 
 // definindo funções globais
-POSITION new_position(POSITION, int, float);
+POSITION new_position(POSITION, float, float);
 void draw_sprite(POSITION position, Texture2D sprite, float angle);
 
 // definindo valores para o desenho dos objetos
@@ -21,13 +21,13 @@ void draw_sprite(POSITION position, Texture2D sprite, float angle);
 
 //player constansts
 // definir constantes 
-#define PLAYER_ANGULAR_SPEED 10
-#define PLAYER_ACCELERATION 1
-#define PLAYER_MAX_SPEED 30
-#define PLAYER_FRICTION 0.5
+#define PLAYER_ANGULAR_SPEED 6
+#define PLAYER_ACCELERATION 0.05
+#define PLAYER_MAX_SPEED 10.0
+#define PLAYER_FRICTION 0.999
 
 // bullet constants
-#define BULLET_ACCELERATION 10
+#define BULLET_ACCELERATION 15
 #define BULLET_LIFE 60
 
 #endif
