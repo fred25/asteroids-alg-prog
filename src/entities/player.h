@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "raylib.h"
-#include "definitions.h"
+#include "../game/definitions.h"
 #include "bullet.h"
 
 // estruturas

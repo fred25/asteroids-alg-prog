@@ -12,12 +12,17 @@ void game(){
     InitWindow(LARGURA, ALTURA, "Asteroids - AlgProg");
     SetTargetFPS(60);
     
+    SetExitKey(KEY_NULL);
+
+
     // cria variaveis - depois vamos ter que trocar isso pela leitura do arquivo lá
     GAME game;
 
     game.state = GAME_STATE_MENU;
     game.points = 0;
     game.current_level = 1;
+    game.should_close = false;
+
 
     // popula o objeto do game
     game.player = (PLAYER) {(POSITION){10, 10}, 0, 0, 3};
@@ -27,8 +32,7 @@ void game(){
     game.bullet_sprite = LoadTexture(BULLET_SPRITE_PATH);
     
     // Game loop
-    while (!WindowShouldClose()){
-
+    while (!WindowShouldClose() && !game.should_close){
         
         update_game_state(&game);
         
@@ -83,6 +87,15 @@ void game_logic(GAME* game){
     if (IsKeyPressed(KEY_P)) {
         game->state = GAME_STATE_PAUSED;
     }
+
+    if(IsKeyPressed(KEY_ESCAPE)){
+        game->state = GAME_STATE_MENU;
+    }
+
+    if(IsKeyPressed(KEY_Q)){
+        quit_game(game);
+    }
+
 }
 
 // funcao que vai desenhar as frames do jogo de acordo com qual estado o jogo esta
@@ -219,7 +232,7 @@ void update_menu(GAME* game) {
     }
 
     if (IsKeyPressed(KEY_Q)) {
-       // jogo deve fechar
+       quit_game(game);
     }
 };
 
@@ -256,7 +269,7 @@ void update_pause(GAME* game) {
     }
 
     if (IsKeyPressed(KEY_Q)) {
-        // jogo deve fechar
+        quit_game(game);
     }
 };
 
@@ -290,13 +303,18 @@ void update_game_over(GAME* game) {
         game->state = GAME_STATE_MENU;
     }
 
+    if (IsKeyPressed(KEY_ESCAPE)){
+        game->state - GAME_STATE_MENU;
+    }
+
     if (IsKeyPressed(KEY_Q)) {
         // jogo deve fechar
     }
 };
 
+void quit_game(GAME* game){
+    game->should_close = true;
 
-
+}
 
 // fazer com que de pra fechar o jogo apertando Q 
-// tem q ver a questao de salvar o jogo 

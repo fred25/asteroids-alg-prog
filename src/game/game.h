@@ -1,6 +1,7 @@
 #include "raylib.h"
+#include <stdbool.h>
 #include "definitions.h"
-#include "player.h"
+#include "../entities/player.h"
 #include "bullet.h"
 
 #define PLAYER_SPRITE_PATH "assets/sprites/player_beta.png"
@@ -29,6 +30,7 @@ typedef struct {
     int points;
     int current_level;
     GAME_STATE state;
+    bool should_close;
 
 } GAME;
 
@@ -48,3 +50,4 @@ void start_new_game(GAME* game);
 void update_menu(GAME*);
 void update_pause(GAME*);
 void update_game_over(GAME*);
+void quit_game(GAME* game);
