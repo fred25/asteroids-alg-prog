@@ -1,8 +1,11 @@
+#ifndef GAME_H
+#define GAME_h
+
 #include "raylib.h"
 #include <stdbool.h>
 #include "definitions.h"
 #include "../entities/player.h"
-#include "bullet.h"
+#include "../entities/bullet.h"
 #include "../entities/asteroid.h"
 
 #define PLAYER_SPRITE_PATH "assets/sprites/player_beta.png"
@@ -33,12 +36,14 @@ typedef struct {
     int n_asteroids;
     Texture2D asteroid_sprite;
 
-
     // game related
     int points;
     int current_level;
     GAME_STATE state;
     bool should_close;
+
+    POSITION player_start_position;
+    int hit_cooldown;
 
 } GAME;
 
@@ -59,3 +64,5 @@ void update_menu(GAME*);
 void update_pause(GAME*);
 void update_game_over(GAME*);
 void quit_game(GAME* game);
+
+#endif

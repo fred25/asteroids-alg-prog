@@ -1,7 +1,9 @@
 // incluindo módulos
 #include "raylib.h"
-#include "game.h"
 #include <stdio.h>
+#include "game.h"
+#include "../systems/collision.h"
+
 
 /**
  * Função "motor" do jogo, roda todas as funcionalidades do jogo.
@@ -83,6 +85,9 @@ void game_logic(GAME* game){
 
     // logica dos asteroides
     asteroid_logic(game->asteroids, game->n_asteroids);
+
+    // logica da colisao
+    collision_logic(game);
 
     // checa se eh game over
     if(game->player.vida <= 0) {
@@ -211,6 +216,8 @@ void deal_with_file(char* filename, GAME* game){
                 .speedy = 0.0,
                 .vida = 3 
             };
+
+            game->player_start_position = (POSITION){.x = x, .y = y};
         }
 
         if (id == 'A' && game->n_asteroids < MAX_ASTEROIDES) {
@@ -234,6 +241,7 @@ void start_new_game(GAME* game){
     game->points = 0;
     game->current_level = 1;
     game->n_bullets = 0;
+    game->hit_cooldown = 0;
 
     deal_with_file("files/niveis/nivel_1.txt", game);
 

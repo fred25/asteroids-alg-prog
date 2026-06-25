@@ -1,6 +1,7 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 #include "raylib.h"
+
 // definindo estruturas globais
 typedef struct {
     float x;
@@ -14,6 +15,10 @@ void draw_sprite(POSITION position, Texture2D sprite, float angle);
 // definindo valores para o desenho dos objetos
 #define LARGURA 1200
 #define ALTURA 800
+
+// definindo tamanho dos objetos
+#define PLAYER_SIZE 64
+#define ASTEROID_SIZE 96
 
 // definindo valor máximo para balas
 #define MAX_BALAS 100
