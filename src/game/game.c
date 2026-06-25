@@ -22,7 +22,7 @@ void game(){
     game.state = GAME_STATE_MENU;
     game.points = 0;
     game.current_level = 1;
-    game.should_close = false;
+    game.should_close = 0;
 
 
     // popula o objeto do game
@@ -48,7 +48,7 @@ void game(){
 }
 
 
-// funcao que vai checar e trocar as telas/estados do jogo
+// função que verifica o estado atual do jogo e chama o módulo correspondente
 void update_game_state(GAME* game) {
     switch (game->state) {
         case GAME_STATE_MENU:
@@ -89,6 +89,21 @@ void game_logic(GAME* game){
     // logica da colisao
     collision_logic(game);
 
+    // se não há asteroides, tenta carregar o próximo nível
+    if (game->n_asteroids == 0) {
+        int next_level = game->current_level + 1;
+        char next_level_file[64];
+        snprintf(next_level_file, sizeof(next_level_file), "files/niveis/nivel_%d.txt", next_level);
+
+        if (deal_with_file(next_level_file, game)) {
+            game->current_level = next_level;
+            game->n_bullets = 0;
+            game->hit_cooldown = 0;
+        } else {
+            game->state = GAME_STATE_MENU;
+        }
+    }
+
     // checa se eh game over
     if(game->player.vida <= 0) {
         game->state = GAME_STATE_GAMEOVER;
@@ -108,7 +123,7 @@ void game_logic(GAME* game){
 
 }
 
-// funcao que vai desenhar as frames do jogo de acordo com qual estado o jogo esta
+// função que desenha a tela atual do jogo de acordo com o estado
 void draw_game_state(GAME* game) {
     BeginDrawing();
     ClearBackground(BLACK);
@@ -192,21 +207,24 @@ void draw_game(GAME* game){
 
 }
 
-void deal_with_file(char* filename, GAME* game){
+// carrega um nível a partir do arquivo de configuração e inicializa asteroides e jogador
+int deal_with_file(char* filename, GAME* game){
 
     char id;
     int x, y;
     float dx, dy;
+    int loaded = 0;
 
     FILE *f = fopen(filename, "r");
 
     if (f == NULL) {
-        return;
+        return 0;
     }
 
-     game->n_asteroids = 0;
+    game->n_asteroids = 0;
 
     while (fscanf(f, " %c,%d,%d,%f,%f", &id, &x, &y, &dx, &dy) == 5){
+        loaded = 1;
 
         if (id == 'N'){
             game->player = (PLAYER) {
@@ -226,16 +244,17 @@ void deal_with_file(char* filename, GAME* game){
             game->asteroids[i] = (ASTEROID) {
                 .position = (POSITION) {.x = x, .y = y},
                 .velocity = (VELOCITY) {.vx = dx, .vy = dy},
-                .active = true
+                .active = 1
             };
 
             game->n_asteroids++;
         }
     }
     fclose(f);
+    return loaded;
 }
 
-// funcao que cria/comeca um novo jogo
+// inicia um novo jogo, zerando pontuação e carregando o primeiro nível
 void start_new_game(GAME* game){
     game->state = GAME_STATE_PLAYING;
     game->points = 0;
@@ -244,36 +263,29 @@ void start_new_game(GAME* game){
     game->hit_cooldown = 0;
 
     deal_with_file("files/niveis/nivel_1.txt", game);
+}
 
-};
-
-// funcao q checa se alguma das teclas de acao do menu foram pressionadas
+// verifica as teclas do menu principal e executa a ação correspondente
 void update_menu(GAME* game) {
     if (IsKeyPressed(KEY_N)) {
-
         start_new_game(game);
-
     }
 
     if (IsKeyPressed(KEY_C)) {
         load_save(game);
-        // deveria ter algo aqui para trocar pro estado de jogando ou isso deveria ser na funcao?
     }
 
     if (IsKeyPressed(KEY_Q)) {
        quit_game(game);
     }
-};
+}
 
-/**
- * Função que carrega o jogo salvo
- */
+// carrega o estado do jogo salvo a partir do arquivo binário
 void load_save(GAME* game){
 
     FILE *f = fopen("files/save.bin", "rb");
 
     if (f == NULL){
-        fclose(f);
         return;
     }
 
@@ -283,7 +295,7 @@ void load_save(GAME* game){
 
 }
 
-// funcao que checa se alguma das teclas de acao do menu de pausa foram pressionadas
+// verifica as teclas do menu de pausa e executa as ações escolhidas
 void update_pause(GAME* game) {
     if (IsKeyPressed(KEY_V)) {
         game->state = GAME_STATE_PLAYING;
@@ -301,17 +313,16 @@ void update_pause(GAME* game) {
     if (IsKeyPressed(KEY_Q)) {
         quit_game(game);
     }
-};
+}
 
 /**
- * Função que salva o jogo em um arquivo binário
+ * Salva o estado atual do jogo em arquivo binário.
  */
 void save_game(GAME game){
 
     FILE *f = fopen("files/save.bin", "wb");
 
     if (f == NULL) {
-        fclose(f);
         return;
     }
 
@@ -323,7 +334,7 @@ void save_game(GAME game){
 
 }
 
-// funcao que checa se alguma das teclas de acao da tela de game over foram pressionadas
+// verifica as teclas da tela de game over e decide a próxima ação
 void update_game_over(GAME* game) {
     if (IsKeyPressed(KEY_R)) {
         start_new_game(game);
@@ -340,11 +351,11 @@ void update_game_over(GAME* game) {
     if (IsKeyPressed(KEY_Q)) {
         quit_game(game);
     }
-};
+}
 
-// funcao que da quit e fecha o jogo
+// marca o jogo para ser encerrado no próximo frame
 void quit_game(GAME* game){
-    game->should_close = true;
+    game->should_close = 1;
 
 }
 

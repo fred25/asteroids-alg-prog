@@ -1,18 +1,18 @@
 #ifndef GAME_H
-#define GAME_h
+#define GAME_H
 
 #include "raylib.h"
-#include <stdbool.h>
 #include "definitions.h"
 #include "../entities/player.h"
 #include "../entities/bullet.h"
 #include "../entities/asteroid.h"
 
+// caminhos dos sprites usados pelo jogo
 #define PLAYER_SPRITE_PATH "assets/sprites/player_beta.png"
 #define BULLET_SPRITE_PATH "assets/sprites/bullet_beta.png"
 #define ASTEROID_SPRITE_PATH "assets/sprites/asteroid_beta.png"
 
-// define game states 
+// define estados do jogo
 typedef enum {
     GAME_STATE_MENU,
     GAME_STATE_PLAYING,
@@ -40,7 +40,7 @@ typedef struct {
     int points;
     int current_level;
     GAME_STATE state;
-    bool should_close;
+    int should_close;
 
     POSITION player_start_position;
     int hit_cooldown;
@@ -51,7 +51,7 @@ typedef struct {
 void game();
 void game_logic(GAME*);
 void draw_game(GAME*);
-void deal_with_file(char* filename, GAME* game);
+int deal_with_file(char* filename, GAME* game);
 void update_game_state(GAME*);
 void draw_game_state(GAME*);
 void draw_menu();

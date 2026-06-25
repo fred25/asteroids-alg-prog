@@ -4,14 +4,14 @@
 #include <math.h>
 #include "raylib.h"
 
-// define bullet struct
+// estrutura da bala
 typedef struct{
-    POSITION position;
-    float angle;
-    int life;
+    POSITION position; // posição atual da bala
+    float angle;       // ângulo de disparo
+    int life;          // tempo de vida restante
 } BULLET;
 
-// define funcitons
+// funções das balas
 void bullet_logic(BULLET*, int*);
 void draw_bullets(BULLET*, int, Texture2D);
 #endif

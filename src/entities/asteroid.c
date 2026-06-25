@@ -3,7 +3,9 @@
 #define ASTEROID_SPEED_MULTIPLIER 100.0f
 #define ASTEROID_SIZE 96
 
-// funcao com a logica do asteroide
+/**
+ * Atualiza a lógica de movimento de todos os asteroides ativos.
+ */
 void asteroid_logic(ASTEROID asteroids[], int n_asteroids){
     for (int i = 0; i < n_asteroids; i++) {
         if (asteroids[i].active) {
@@ -13,16 +15,19 @@ void asteroid_logic(ASTEROID asteroids[], int n_asteroids){
     }
 }
 
-// funcao que controla o movimento do asteroide
+/**
+ * Move um asteroide usando sua velocidade e o tempo de frame.
+ */
 void move_asteroid(ASTEROID* asteroid){
     float delta_time = GetFrameTime();
 
     asteroid->position.x += asteroid->velocity.vx * ASTEROID_SPEED_MULTIPLIER * delta_time;
     asteroid->position.y += asteroid->velocity.vy * ASTEROID_SPEED_MULTIPLIER * delta_time;
-
 }
 
-// funcao -> se o asteroide ir pra fora da tela de um lado, faz ele aparecer do outro
+/**
+ * Se o asteroide sair da tela, faz ele reaparecer no lado oposto.
+ */
 void wrap_asteroid(ASTEROID* asteroid) {
     if (asteroid->position.x > LARGURA) {
         asteroid->position.x = 0;
@@ -41,7 +46,9 @@ void wrap_asteroid(ASTEROID* asteroid) {
     }
 }
 
-// funcao que desenha o asteroide 
+/**
+ * Desenha todos os asteroides ativos na tela.
+ */
 void draw_asteroid(ASTEROID asteroids[], int n_asteroids, Texture2D asteroid_sprite){ 
     for (int i = 0; i < n_asteroids; i++) {
         if (asteroids[i].active) {

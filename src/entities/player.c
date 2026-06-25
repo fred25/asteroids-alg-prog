@@ -80,7 +80,7 @@ void new_speed(float *speedx, float *speedy, float angle){
  */
 void shoot(BULLET* bullets, int* n_bullets, PLAYER player){ 
 
-    if (IsKeyPressed(KEY_SPACE)){
+    if (IsKeyPressed(KEY_SPACE) && *n_bullets < MAX_BALAS){
         bullets[*n_bullets] = (BULLET) {player.position, player.angle, BULLET_LIFE};
         (*n_bullets)++;
     
